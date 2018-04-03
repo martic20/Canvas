@@ -1,71 +1,142 @@
 package martic20.canvas;
 
-
-        import android.content.Context;
-        import android.graphics.Canvas;
-        import android.graphics.Color;
-        import android.graphics.Paint;
-        import android.graphics.RectF;
-        import android.view.MotionEvent;
-        import android.view.View;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 
 /**
- * Created by ximo on 03/04/2018.
+ * Created by Martí on 3/4/2018.
  */
 
 public class Lienzo extends View {
-    Paint pintar = new Paint();
+    public int width;
+    public int height;
+    private Bitmap mBitmap;
+    private Canvas mCanvas;
+    private Path mPath;
+    private Paint mBitmapPaint;
+    Context context;
+    private Paint circlePaint;
+    private Path circlePath;
+    private Paint mPaint;
 
-    int x = 100;
-    int y = 100;
-    int cont = 0;
 
-    public Lienzo(Context context) {
-        super(context);
+    public Lienzo(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+        init();
+    }
+    public Lienzo(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+    }
+
+    public Lienzo(Context c) {
+        super(c);
+        context = c;
+        init();
+    }
+
+    public void init(){
+        setBackgroundColor(Color.BLACK);
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setColor(Color.MAGENTA);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeWidth(12);
+        mPath = new Path();
+        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+        circlePaint = new Paint();
+        circlePath = new Path();
+        circlePaint.setAntiAlias(true);
+        circlePaint.setColor(Color.BLUE);
+        circlePaint.setStyle(Paint.Style.STROKE);
+        circlePaint.setStrokeJoin(Paint.Join.MITER);
+        circlePaint.setStrokeWidth(4f);
+    }
+
+    public void setColor(int c){
+        mPaint.setColor(c);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        mCanvas = new Canvas(mBitmap);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
+        canvas.drawPath(mPath, mPaint);
+        canvas.drawPath(circlePath, circlePaint);
+    }
+
+    private float mX, mY;
+    private static final float TOUCH_TOLERANCE = 4;
+
+    private void touch_start(float x, float y) {
+        mPath.reset();
+        mPath.moveTo(x, y);
+        mX = x;
+        mY = y;
+    }
+
+    private void touch_move(float x, float y) {
+        float dx = Math.abs(x - mX);
+        float dy = Math.abs(y - mY);
+        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+            mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
+            mX = x;
+            mY = y;
+
+            circlePath.reset();
+            circlePath.addCircle(mX, mY, 30, Path.Direction.CW);
+        }
+    }
+
+    private void touch_up() {
+        mPath.lineTo(mX, mY);
+        circlePath.reset();
+        // commit the path to our offscreen
+        mCanvas.drawPath(mPath, mPaint);
+        // kill this so we don't double draw
+        mPath.reset();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int eventaction = event.getAction();
+        float x = event.getX();
+        float y = event.getY();
 
-        if (eventaction == MotionEvent.ACTION_DOWN) {
-            x = (int) event.getX();
-            y = (int) event.getY();
-            invalidate();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touch_start(x, y);
+                invalidate();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                touch_move(x, y);
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                touch_up();
+                invalidate();
+                break;
         }
         return true;
     }
-
-    @Override
-    public void onDraw(Canvas canvas) {
-        switch (cont) {
-            case 0:
-                pintar.setColor(Color.RED);
-                canvas.drawRect(x - 20, y - 20, x + 20, y + 10, pintar);
-                pintar.setColor(Color.GREEN);
-                canvas.drawRect(x - 20, y, x + 20, y + 20, pintar);
-                break;
-
-            case 1:
-                pintar.setColor(Color.YELLOW);
-                canvas.drawCircle(x, y, 40, pintar);
-                break;
-
-            case 2:
-                pintar.setColor(Color.YELLOW);
-                pintar.setTextSize(40);
-                canvas.drawText("EYYYY!!", x, y, pintar);
-                break;
-
-            case 3:
-                pintar.setColor(Color.MAGENTA);
-                canvas.drawOval(new RectF(x - 40, y - 20, x + 40, y + 20), pintar);
-                break;
-        }
-        cont = (cont + 1) % 4;
-    }
-
-
-
 }
 
