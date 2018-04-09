@@ -18,24 +18,24 @@ android:orientation="vertical"
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-           android:text="-"
+           android:text="S"
             android:textSize="30sp"
-            android:id="@+id/sizeL"
-            android:layout_weight="1"
-            />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/sizeReset"
-            android:text="."
-            android:textSize="30sp"
+            android:id="@+id/sizeS"
             android:layout_weight="1"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/sizeM"
-            android:text="+"
+            android:text="M"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sizeL"
+            android:text="L"
             android:textSize="30sp"
             android:layout_weight="1"
             />

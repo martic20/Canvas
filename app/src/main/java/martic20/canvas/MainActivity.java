@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +46,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        Button sS= (Button) findViewById(R.id.sizeS);
+        sS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                l.setSize(4);
+            }
+        });
+        Button sM= (Button) findViewById(R.id.sizeM);
+        sM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                l.setSize(16);
+            }
+        });
+        Button sL= (Button) findViewById(R.id.sizeL);
+        sL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                l.setSize(32);
+            }
+        });
     }
 }
 

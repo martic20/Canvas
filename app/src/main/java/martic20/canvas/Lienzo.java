@@ -68,6 +68,10 @@ public class Lienzo extends View {
         mPaint.setColor(c);
     }
 
+    public void setSize(float c){
+        mPaint.setStrokeWidth(c);
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
