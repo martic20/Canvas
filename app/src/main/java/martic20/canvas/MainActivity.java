@@ -26,8 +26,6 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private Lienzo l;
-    private Camera mCamera;
-    private CameraPreview mPreview;
 
 
     @Override
@@ -40,29 +38,16 @@ public class MainActivity extends AppCompatActivity {
                 == PackageManager.PERMISSION_DENIED)
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 100);
 
-        mCamera = getCameraInstance();
-        if (mCamera != null) {
-            mCamera.release();
-            mCamera = null;
+        if (null == savedInstanceState) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, Camera2BasicFragment.newInstance())
+                    .commit();
         }
-        mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.canvas);
-        preview.addView(mPreview);
 
 
     }
 
-    public Camera getCameraInstance() {
-        Camera c = null;
-        try {
 
-            c = Camera.open();
-        } catch (Exception e) {
-            Log.d("martic20", "Error setting camera preview: " + e.getMessage());
-
-        }
-        return c;
-    }
 
     private void setupButtons() {
         ImageButton red = (ImageButton) findViewById(R.id.colorRed);
