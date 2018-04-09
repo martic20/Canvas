@@ -44,7 +44,7 @@ public class Lienzo extends View {
     }
 
     public void init(){
-        setBackgroundColor(Color.BLACK);
+        //setBackgroundColor(Color.BLACK);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
