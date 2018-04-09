@@ -45,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
                 l.setColor(Color.BLUE);
             }
         });
+        ImageButton orange = (ImageButton)findViewById(R.id.colorOrange);
+        orange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                l.setColor(Color.rgb(255,111,0));
+            }
+        });
 
         Button sS= (Button) findViewById(R.id.sizeS);
         sS.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 l.setSize(32);
+            }
+        });
+        Button sXL= (Button) findViewById(R.id.sizeXL);
+        sXL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                l.setSize(64);
             }
         });
     }

@@ -13,13 +13,14 @@ android:orientation="vertical"
         android:layout_weight=".1"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:background="@android:color/black">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
            android:text="S"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:id="@+id/sizeS"
             android:layout_weight="1"
             />
@@ -28,7 +29,7 @@ android:orientation="vertical"
             android:layout_height="match_parent"
             android:id="@+id/sizeM"
             android:text="M"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:layout_weight="1"
             />
         <Button
@@ -36,7 +37,15 @@ android:orientation="vertical"
             android:layout_height="match_parent"
             android:id="@+id/sizeL"
             android:text="L"
-            android:textSize="30sp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sizeXL"
+            android:text="XL"
+            android:textSize="20sp"
             android:layout_weight="1"
             />
     </LinearLayout>
@@ -49,6 +58,7 @@ android:orientation="vertical"
     <LinearLayout
         android:layout_weight=".1"
         android:orientation="horizontal"
+        android:background="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
@@ -71,6 +81,13 @@ android:orientation="vertical"
             android:layout_height="match_parent"
             android:backgroundTint="#0011ff"
             android:id="@+id/colorBlue"
+            android:layout_weight="1"
+            />
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#ff6f00"
+            android:id="@+id/colorOrange"
             android:layout_weight="1"
             />
     </LinearLayout>
